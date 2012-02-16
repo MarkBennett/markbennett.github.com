@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+
+    <!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=device-width" />
+
+	<title>markbennett.ca</title>
+  
+	<!-- Included CSS Files -->
+	<link rel="stylesheet" href="stylesheets/foundation.css">
+	<link rel="stylesheet" href="stylesheets/app.css">
+
+	<!--[if lt IE 9]>
+		<link rel="stylesheet" href="stylesheets/ie.css">
+	<![endif]-->
+
+
+	<!-- IE Fix for HTML5 Tags -->
+	<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+</head>
+<body class="home">
+
+	<!-- container -->
+	<div class="container">
+
+		<div class="row">
+			<div class="twelve columns">
+				<h2>MarkBennett.ca</h2>
+				<p>The who, what, where</p>
+				<hr />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="eight columns">
+                {{ content }}
+			</div>
+
+			<div class="four columns">			
+				<h4>About Me</h4>
+                <img src="images/headshot.png" alt="An image of me peeking up from the bottom of the frame">
+                <p>I'm a programmer and photographer.</p>
+                
+                <p>I own <a href="http://burmis.ca">Burmis Studio</a>, and am 
+                one of the organizers of <a href="http://yegrb.com">YEGRB</a>,
+                the Edmonton Ruby Meetup.</p>
+
+				<h4>Find Me</h4>
+				<p>Looking to get in touch? Try one of the communities below.</p>
+				<ul class="disc">
+        			<li><a href="https://github.com/MarkBennett">GitHub</a></li>
+					<li><a href="http://twitter.com/MarkBennett">Twitter</a></li>
+    				<li><a href="https://plus.google.com/104431949275766772757/postst">Google+</a></li>
+        			<li><a href="http://www.facebook.com/mark.f.bennett">Facebook</a></li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+	<!-- container -->
+
+
+
+
+	<!-- Included JS Files -->
+	<script src="javascripts/foundation.js"></script>
+	<script src="javascripts/app.js"></script>
+
+</body>
+</html>
