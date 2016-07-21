@@ -1,0 +1,54 @@
+==================================================================
+https://keybase.io/markbennett
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://markbennett.ca
+  * I am markbennett (https://keybase.io/markbennett) on keybase.
+  * I have a public key ASBJmEnSXoZRBN6fjNeHIg7KiUmIKIkwR1z8hwa4D5yGSwo
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0120499849d25e865104de9f8cd787220eca894988288930475cfc8706b80f9c864b0a",
+            "host": "keybase.io",
+            "kid": "0120499849d25e865104de9f8cd787220eca894988288930475cfc8706b80f9c864b0a",
+            "uid": "44fd667cdb8b5e74b9b6c72801683a19",
+            "username": "markbennett"
+        },
+        "service": {
+            "hostname": "markbennett.ca",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "client": {
+        "name": "keybase.io go client",
+        "version": "1.0.16"
+    },
+    "ctime": 1469134180,
+    "expire_in": 504576000,
+    "merkle_root": {
+        "ctime": 1469134164,
+        "hash": "3179061b2c2cb826b234bd7e40f17b5db372c6abe938d4874d2de43dca73906cdae3a781b6bf349b4727d8518299b2e50a30384dbd942bd3b03ab7ae586b88cd",
+        "seqno": 536721
+    },
+    "prev": "37e2c01a87ffacb60366f90225eb5febf1db97a8aa2866ee368cfa52cc7e2a0d",
+    "seqno": 9,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgSZhJ0l6GUQTen4zXhyIOyolJiCiJMEdc/IcGuA+chksKp3BheWxvYWTFAvh7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTIwNDk5ODQ5ZDI1ZTg2NTEwNGRlOWY4Y2Q3ODcyMjBlY2E4OTQ5ODgyODg5MzA0NzVjZmM4NzA2YjgwZjljODY0YjBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwNDk5ODQ5ZDI1ZTg2NTEwNGRlOWY4Y2Q3ODcyMjBlY2E4OTQ5ODgyODg5MzA0NzVjZmM4NzA2YjgwZjljODY0YjBhIiwidWlkIjoiNDRmZDY2N2NkYjhiNWU3NGI5YjZjNzI4MDE2ODNhMTkiLCJ1c2VybmFtZSI6Im1hcmtiZW5uZXR0In0sInNlcnZpY2UiOnsiaG9zdG5hbWUiOiJtYXJrYmVubmV0dC5jYSIsInByb3RvY29sIjoiaHR0cDoifSwidHlwZSI6IndlYl9zZXJ2aWNlX2JpbmRpbmciLCJ2ZXJzaW9uIjoxfSwiY2xpZW50Ijp7Im5hbWUiOiJrZXliYXNlLmlvIGdvIGNsaWVudCIsInZlcnNpb24iOiIxLjAuMTYifSwiY3RpbWUiOjE0NjkxMzQxODAsImV4cGlyZV9pbiI6NTA0NTc2MDAwLCJtZXJrbGVfcm9vdCI6eyJjdGltZSI6MTQ2OTEzNDE2NCwiaGFzaCI6IjMxNzkwNjFiMmMyY2I4MjZiMjM0YmQ3ZTQwZjE3YjVkYjM3MmM2YWJlOTM4ZDQ4NzRkMmRlNDNkY2E3MzkwNmNkYWUzYTc4MWI2YmYzNDliNDcyN2Q4NTE4Mjk5YjJlNTBhMzAzODRkYmQ5NDJiZDNiMDNhYjdhZTU4NmI4OGNkIiwic2Vxbm8iOjUzNjcyMX0sInByZXYiOiIzN2UyYzAxYTg3ZmZhY2I2MDM2NmY5MDIyNWViNWZlYmYxZGI5N2E4YWEyODY2ZWUzNjhjZmE1MmNjN2UyYTBkIiwic2Vxbm8iOjksInRhZyI6InNpZ25hdHVyZSJ9o3NpZ8RAoWKWDoIRQYgrpUffXoFRZhif4uP4TihnIiZGJw5qc2uUjx7Xg9W4wplodbpuDxzP5mvw4A8PqyNkEJ8fDxjhBKhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIP6NSXfo9wbfr9z/JujKUYrF6ZTD39Du9AIWGsmSJ1wZo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/markbennett
+
+==================================================================
