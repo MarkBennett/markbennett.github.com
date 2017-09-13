@@ -9,10 +9,9 @@ These steps document this process for my own records, but anyone is welcome to u
 ```bash
 cd <YOUR_AWESOME_RAILS_APP>
 cat "gem 'spree', '~> 3.3.0'" > Gemfile
-cat "gem 'spree_gateway', '~> 3.3'" > Gemfile
 bundle install
-rails g spree:install --user_class=User
-rails g spree:custom_user User
+bin/rails generate spree:install --user-class=User --no-sample
+bin/rails g spree:custom_user User
 ```
 
 At this point it's time to customize our routes so Spree knows how to login and out. Open `config/routes.rb` and add:
@@ -28,5 +27,7 @@ end
 Finally I went back to finish the gateway install:
 
 ```bash
+cat "gem 'spree_gateway', '~> 3.3'" > Gemfile
+bundle install
 bundle exec rails g spree_gateway:install
 ```
