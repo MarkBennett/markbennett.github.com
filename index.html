@@ -2,12 +2,6 @@
 layout: default
 ---
 
-<article>
-	<a href="{{ site.posts.first.url }}"><h4>{{ site.posts.first.title }}</h4></a>
-	{{ site.posts.first.content }}
-</article>
-
-
 <h4>Projects & Talks</h4>
 <ul>
   <li><a href="https://docs.google.com/presentation/d/e/2PACX-1vSVfvMG7a9wJD0vs7mUtKZD6siv4VnUk35M8YYsuC_O0Xx4HmOGzGtw3euzQrdo7CHHoNcSmsve-KfU/pub?start=false&loop=false&delayms=3000"><strong>Let's Git This Party Started!</strong>, an introduction for new team members to Git and GitHub. Grab your keys and start your engines, you'll be racing ahead with Git by the end!</a></li>
@@ -17,3 +11,10 @@ layout: default
   <li><a href="http://markbennett.ca/JAWS-on-a-plane/"><strong>JAWS On A Plane</strong>, <em>an HTML5 game made on a 3 hour plane flight</em>.</a></li>
   <li><a href="https://gist.github.com/1629116"><strong>Debugging JavaScript in the trenches</strong>, <em>a talk on JavaScript debugging tips</em>.</a></li>
 </ul>
+
+<div class="articles">
+  <article>
+    <a href="{{ site.posts.first.url }}"><h4>{{ site.posts.first.title }}</h4></a>
+    {{ site.posts.first.content }}
+  </article>
+</div>
