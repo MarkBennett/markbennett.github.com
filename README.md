@@ -46,7 +46,7 @@ pubDate: YYYY-MM-DD
 ---
 ```
 
-The URL structure for blog posts is: `/blog/YYYY-MM-DD-slug.html`
+The URL structure for blog posts is: `/blog/YYYY-MM-DD-slug/`
 
 ## 🚀 Deployment
 
@@ -55,8 +55,9 @@ The site is automatically deployed to GitHub Pages via GitHub Actions when chang
 ## 🔗 URL Structure
 
 - Home: `/`
-- Blog posts: `/blog/YYYY-MM-DD-slug.html`
-- Vote 2025: `/vote2025`
+- Blog list: `/blog/`
+- Blog posts: `/blog/YYYY-MM-DD-slug/`
+- Vote 2025: `/vote2025/`
 
 ## 📦 Technologies
 
