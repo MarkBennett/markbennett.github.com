@@ -1,0 +1,117 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+// Get all blog posts and sort by date (newest first)
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) => 
+  b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+
+// Group posts by year
+const postsByYear = sortedPosts.reduce((acc, post) => {
+  const year = post.data.pubDate.getFullYear();
+  if (!acc[year]) {
+    acc[year] = [];
+  }
+  acc[year].push(post);
+  return acc;
+}, {} as Record<number, typeof sortedPosts>);
+
+// Get sorted years (newest first)
+const years = Object.keys(postsByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+---
+
+<Layout title="Blog - MarkBennett.ca">
+  <h1>Blog</h1>
+  
+  {years.map(year => (
+    <section class="year-section">
+      <h2>{year}</h2>
+      <ul class="post-list">
+        {postsByYear[year].map(post => {
+          const formattedDate = new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }).format(post.data.pubDate);
+          
+          return (
+            <li class="post-item">
+              <a href={`/blog/${post.slug}`} class="post-link">
+                <h3 class="post-title">{post.data.title}</h3>
+              </a>
+              {post.data.description && (
+                <p class="post-summary">{post.data.description}</p>
+              )}
+              <p class="post-date">{formattedDate}</p>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  ))}
+</Layout>
+
+<style>
+  h1 {
+    margin-bottom: 2rem;
+  }
+
+  .year-section {
+    margin-bottom: 3rem;
+  }
+
+  .year-section h2 {
+    color: #2c3e50;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+  }
+
+  .post-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .post-item {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #ecf0f1;
+  }
+
+  .post-item:last-child {
+    border-bottom: none;
+  }
+
+  .post-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .post-title {
+    color: #3498db;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    transition: color 0.2s;
+  }
+
+  .post-link:hover .post-title {
+    color: #2980b9;
+  }
+
+  .post-summary {
+    color: #555;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .post-date {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+</style>
