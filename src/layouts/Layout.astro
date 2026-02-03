@@ -1,0 +1,58 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "MarkBennett.ca - The who, what, where" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/styles/global.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h2>MarkBennett.ca</h2>
+            <p>The who, what, where</p>
+            <hr />
+        </header>
+
+        <div class="content-wrapper">
+            <main class="main-content">
+                <slot />
+            </main>
+
+            <aside class="sidebar">
+                <section>
+                    <h4>About Me</h4>
+                    <img src="/images/headshot.png" alt="An image of me peeking up from the bottom of the frame">
+                    <p>I'm a programmer and photographer.</p>
+                    
+                    <p>I own <a href="http://burmis.ca">Burmis Studio</a>, and am 
+                    one of the organizers of <a href="http://yegrb.com">YEGRB</a>,
+                    the Edmonton Ruby Meetup.</p>
+                </section>
+
+                <section>
+                    <h4>Find Me</h4>
+                    <p>Looking to get in touch? Try one of the communities below.</p>
+                    <ul class="disc">
+                        <li><a href="https://github.com/MarkBennett">GitHub</a></li>
+                        <li><a rel="me" href="https://mastodon.social/@markbennett">Mastodon</a></li>
+                        <li><a href="http://twitter.com/MarkBennett">Twitter</a></li>
+                        <li><a href="https://plus.google.com/104431949275766772757/postst">Google+</a></li>
+                        <li><a href="http://www.facebook.com/mark.f.bennett">Facebook</a></li>
+                    </ul>
+                </section>
+            </aside>
+        </div>
+    </div>
+</body>
+</html>

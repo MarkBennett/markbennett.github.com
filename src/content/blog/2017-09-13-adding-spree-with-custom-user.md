@@ -1,4 +1,8 @@
-# Adding Spree E-commerce to an existing Rails application that uses Devise and a custom User model
+---
+title: "Adding Spree E-commerce to an existing Rails application that uses Devise and a custom User model"
+description: "These steps document the process of adding Spree to an existing Rails application with custom authentication."
+pubDate: 2017-09-13
+---
 
 These steps document this process for my own records, but anyone is welcome to use them. I've taken these steps from a few places:
 
