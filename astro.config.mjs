@@ -8,6 +8,6 @@ export default defineConfig({
   integrations: [mdx(), sitemap()],
   output: 'static',
   build: {
-    format: 'file',
+    format: 'directory',
   },
 });
