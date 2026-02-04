@@ -15,7 +15,7 @@ const project = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    type: z.string(),
+    type: z.enum(['project', 'talk']),
     url: z.string(),
     order: z.number(),
   }),
