@@ -56,6 +56,7 @@ const { postUrl } = Astro.props;
       
       return `at://${did}/app.bsky.feed.post/${postId}`;
     } catch (e) {
+      console.error('Error converting URL to AT URI:', e);
       return null;
     }
   }
@@ -70,6 +71,11 @@ const { postUrl } = Astro.props;
   // Load comments on page load
   async function loadComments() {
     const container = document.getElementById('comments-container');
+    
+    if (!container) {
+      console.error('Comments container element not found');
+      return;
+    }
     
     try {
       const atUri = await webUrlToAtUri(postUrl);
@@ -127,6 +133,7 @@ const { postUrl } = Astro.props;
       container.innerHTML = `<div class="space-y-6">${commentsHtml}</div>`;
       
     } catch (error) {
+      console.error('Error loading Bluesky comments:', error);
       container.innerHTML = `
         <div>
           <p class="text-muted mb-4">Comments are hosted on Bluesky.</p>
@@ -161,12 +168,20 @@ const { postUrl } = Astro.props;
       const popup = window.open(
         url,
         'bluesky-reply',
-        `width=${width},height=${height},left=${left},top=${top},popup,noopener,noreferrer`
+        `width=${width},height=${height},left=${left},top=${top},popup`
       );
+      
+      // Set opener to null for security
+      if (popup) {
+        popup.opener = null;
+      }
       
       // Fallback: if popup blocked, open in new tab
       if (!popup || popup.closed || typeof popup.closed === 'undefined') {
-        window.open(url, '_blank', 'noopener,noreferrer');
+        const fallback = window.open(url, '_blank');
+        if (fallback) {
+          fallback.opener = null;
+        }
       }
     });
   }
