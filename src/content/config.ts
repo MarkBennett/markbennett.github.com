@@ -17,6 +17,7 @@ const project = defineCollection({
     description: z.string(),
     type: z.string(),
     url: z.string(),
+    order: z.number(),
   }),
 });
 

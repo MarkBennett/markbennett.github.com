@@ -11,12 +11,13 @@ const { Content } = await latestPost.render();
 
 // Get all projects and talks
 const allProjects = await getCollection('project');
+const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <Layout title="markbennett.ca">
     <h4>Projects & Talks</h4>
     <ul>
-        {allProjects.map((project) => (
+        {sortedProjects.map((project) => (
             <li><a href={project.data.url}><strong>{project.data.title}</strong>, <em>{project.data.description}</em></a></li>
         ))}
     </ul>
