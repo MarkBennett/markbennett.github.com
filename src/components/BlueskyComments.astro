@@ -6,7 +6,7 @@ interface Props {
 const { postUrl } = Astro.props;
 ---
 
-<div class="mt-12 pt-8 border-t border-gray-300" id="bluesky-comments-section">
+<div class="mt-12 pt-8 border-t border-gray-300">
   <h2 class="text-2xl font-bold mb-6 text-heading">Comments</h2>
   
   <div class="mb-6">
@@ -25,10 +25,6 @@ const { postUrl } = Astro.props;
 </div>
 
 <script define:vars={{ postUrl }}>
-  // Configuration constants
-  const VISIBILITY_THRESHOLD = 0.1; // Load when 10% of component is visible
-  const PRELOAD_MARGIN = '200px'; // Start loading 200px before section enters viewport
-
   // Convert Bluesky web URL to AT URI
   async function webUrlToAtUri(url) {
     try {
@@ -190,42 +186,10 @@ const { postUrl } = Astro.props;
     });
   }
 
-  // Load comments when component is scrolled into view (Intersection Observer)
-  function initLazyLoading() {
-    const commentsSection = document.getElementById('bluesky-comments-section');
-    
-    if (!commentsSection) {
-      console.error('Bluesky comments section element (#bluesky-comments-section) not found');
-      return;
-    }
-
-    // Check if Intersection Observer is supported
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            // Load comments when section becomes visible
-            loadComments();
-            // Stop observing after loading
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: VISIBILITY_THRESHOLD,
-        rootMargin: PRELOAD_MARGIN
-      });
-      
-      observer.observe(commentsSection);
-    } else {
-      // Fallback for browsers without Intersection Observer support
-      loadComments();
-    }
-  }
-
-  // Initialize lazy loading when DOM is ready
+  // Load comments when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLazyLoading);
+    document.addEventListener('DOMContentLoaded', loadComments);
   } else {
-    initLazyLoading();
+    loadComments();
   }
 </script>

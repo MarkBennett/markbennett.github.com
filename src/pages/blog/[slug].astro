@@ -30,7 +30,7 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
         </div>
         
         {post.data.bskyUrl && (
-            <BlueskyComments postUrl={post.data.bskyUrl} />
+            <BlueskyComments postUrl={post.data.bskyUrl} client:idle />
         )}
     </article>
 </Layout>
