@@ -6,7 +6,7 @@ interface Props {
 const { postUrl } = Astro.props;
 ---
 
-<div class="mt-12 pt-8 border-t border-gray-300">
+<div class="mt-12 pt-8 border-t border-gray-300" id="bluesky-comments-section">
   <h2 class="text-2xl font-bold mb-6 text-heading">Comments</h2>
   
   <div class="mb-6">
@@ -25,6 +25,10 @@ const { postUrl } = Astro.props;
 </div>
 
 <script define:vars={{ postUrl }}>
+  // Configuration constants
+  const VISIBILITY_THRESHOLD = 0.1; // Load when 10% of component is visible
+  const PRELOAD_MARGIN = '200px'; // Start loading 200px before section enters viewport
+
   // Convert Bluesky web URL to AT URI
   async function webUrlToAtUri(url) {
     try {
@@ -188,10 +192,10 @@ const { postUrl } = Astro.props;
 
   // Load comments when component is scrolled into view (Intersection Observer)
   function initLazyLoading() {
-    const commentsSection = document.querySelector('#comments-container')?.parentElement;
+    const commentsSection = document.getElementById('bluesky-comments-section');
     
     if (!commentsSection) {
-      console.error('Comments section element not found');
+      console.error('Bluesky comments section element (#bluesky-comments-section) not found');
       return;
     }
 
@@ -207,10 +211,8 @@ const { postUrl } = Astro.props;
           }
         });
       }, {
-        // Start loading when 10% of the component is visible
-        threshold: 0.1,
-        // Load slightly before it comes into view (200px margin)
-        rootMargin: '200px'
+        threshold: VISIBILITY_THRESHOLD,
+        rootMargin: PRELOAD_MARGIN
       });
       
       observer.observe(commentsSection);
