@@ -2,6 +2,7 @@
 title: "Back to the Blog"
 description: "It's been a while but I'm back to blogging after a hiatus."
 pubDate: 2026-02-04
+bskyUrl: "https://bsky.app/profile/markbennett.ca/post/3me2u2vt5gc2q"
 ---
 
 Well, it's been a while! After some gentle ribbing from a friend who will remain nameless, I've decided it's time to get back to this site and start blogging again.
