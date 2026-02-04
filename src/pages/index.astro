@@ -4,14 +4,15 @@ import { getCollection } from 'astro:content';
 
 const allBlogPosts = await getCollection('blog');
 const sortedPosts = allBlogPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const latestPost = sortedPosts[0];
-
-// Render the latest post content
-const { Content } = await latestPost.render();
 
 // Get all projects and talks
 const allProjects = await getCollection('project');
 const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
+
+// Format date helper
+function formatDate(date: Date): string {
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
 ---
 
 <Layout title="markbennett.ca">
@@ -22,10 +23,14 @@ const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
         ))}
     </ul>
 
-    <div class="articles">
-        <article>
-            <a href={`/blog/${latestPost.slug}/`}><h4>{latestPost.data.title}</h4></a>
-            <Content />
-        </article>
-    </div>
+    <h4>Recent Blog Posts</h4>
+    <ul class="blog-list">
+        {sortedPosts.map((post) => (
+            <li>
+                <a href={`/blog/${post.slug}/`}><strong>{post.data.title}</strong></a>
+                <div class="blog-meta">{formatDate(post.data.pubDate)}</div>
+                {post.data.description && <p><em>{post.data.description}</em></p>}
+            </li>
+        ))}
+    </ul>
 </Layout>
