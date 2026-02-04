@@ -4,121 +4,138 @@ interface Props {
 }
 
 const { postUrl } = Astro.props;
-
-// Convert Bluesky web URL to AT URI
-function webUrlToAtUri(url: string): string | null {
-  try {
-    const urlObj = new URL(url);
-    const pathParts = urlObj.pathname.split('/').filter(p => p);
-    
-    // Expected format: /profile/{handle}/post/{postId}
-    if (pathParts.length !== 4 || pathParts[0] !== 'profile' || pathParts[2] !== 'post') {
-      return null;
-    }
-    
-    const handle = pathParts[1];
-    const postId = pathParts[3];
-    
-    return `at://${handle}/app.bsky.feed.post/${postId}`;
-  } catch (e) {
-    return null;
-  }
-}
-
-const atUri = webUrlToAtUri(postUrl);
-let thread = null;
-let error = false;
-
-if (atUri) {
-  try {
-    const apiUrl = `https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?uri=${encodeURIComponent(atUri)}`;
-    const response = await fetch(apiUrl);
-    
-    if (response.ok) {
-      const data = await response.json();
-      thread = data.thread;
-    } else {
-      error = true;
-    }
-  } catch (e) {
-    error = true;
-  }
-} else {
-  error = true;
-}
-
-const replies = thread?.replies || [];
 ---
 
 <div class="mt-12 pt-8 border-t border-gray-300">
   <h2 class="text-2xl font-bold mb-6 text-heading">Comments</h2>
   
-  {error ? (
-    <div class="mb-6">
-      <p class="text-muted mb-4">Comments are hosted on Bluesky.</p>
-      <a 
-        href={postUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-      >
-        View conversation on Bluesky →
-      </a>
-    </div>
-  ) : (
-    <>
-      <div class="mb-6">
-        <button
-          id="reply-button"
-          data-url={postUrl}
-          class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors cursor-pointer"
-        >
-          Reply on Bluesky
-        </button>
-      </div>
+  <div class="mb-6">
+    <button
+      id="reply-button"
+      data-url={postUrl}
+      class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors cursor-pointer"
+    >
+      Reply on Bluesky
+    </button>
+  </div>
 
-      {replies.length === 0 ? (
-        <p class="text-muted">No comments yet. Be the first to reply on Bluesky!</p>
-      ) : (
-        <div class="space-y-6">
-          {replies.map((reply: any) => {
-            const author = reply.post?.author;
-            const record = reply.post?.record;
-            
-            if (!author || !record) return null;
-            
-            return (
-              <div class="border border-gray-200 rounded-lg p-4 bg-white">
-                <div class="flex items-start gap-3 mb-3">
-                  {author.avatar && (
-                    <img 
-                      src={author.avatar} 
-                      alt={author.displayName || author.handle}
-                      class="w-10 h-10 rounded-full"
-                    />
-                  )}
-                  <div class="flex-1 min-w-0">
-                    <div class="font-semibold text-heading">
-                      {author.displayName || author.handle}
-                    </div>
-                    <div class="text-sm text-muted">
-                      @{author.handle}
-                    </div>
-                  </div>
-                </div>
-                <div class="prose prose-sm max-w-none">
-                  <p class="whitespace-pre-wrap">{record.text}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </>
-  )}
+  <div id="comments-container">
+    <p class="text-muted">Loading comments...</p>
+  </div>
 </div>
 
-<script>
+<script define:vars={{ postUrl }}>
+  // Convert Bluesky web URL to AT URI
+  async function webUrlToAtUri(url) {
+    try {
+      const urlObj = new URL(url);
+      const pathParts = urlObj.pathname.split('/').filter(p => p);
+      
+      // Expected format: /profile/{handle}/post/{postId}
+      if (pathParts.length !== 4 || pathParts[0] !== 'profile' || pathParts[2] !== 'post') {
+        return null;
+      }
+      
+      const handle = pathParts[1];
+      const postId = pathParts[3];
+      
+      // Resolve handle to DID
+      const resolveUrl = `https://public.api.bsky.app/xrpc/com.atproto.identity.resolveHandle?handle=${encodeURIComponent(handle)}`;
+      const resolveResponse = await fetch(resolveUrl);
+      
+      if (!resolveResponse.ok) {
+        return null;
+      }
+      
+      const resolveData = await resolveResponse.json();
+      const did = resolveData.did;
+      
+      if (!did) {
+        return null;
+      }
+      
+      return `at://${did}/app.bsky.feed.post/${postId}`;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Load comments on page load
+  async function loadComments() {
+    const container = document.getElementById('comments-container');
+    
+    try {
+      const atUri = await webUrlToAtUri(postUrl);
+      
+      if (!atUri) {
+        throw new Error('Invalid URL format');
+      }
+      
+      const apiUrl = `https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?uri=${encodeURIComponent(atUri)}`;
+      const response = await fetch(apiUrl);
+      
+      if (!response.ok) {
+        throw new Error('API request failed');
+      }
+      
+      const data = await response.json();
+      const replies = data.thread?.replies || [];
+      
+      if (replies.length === 0) {
+        container.innerHTML = '<p class="text-muted">No comments yet. Be the first to reply on Bluesky!</p>';
+        return;
+      }
+      
+      // Render comments
+      const commentsHtml = replies.map(reply => {
+        const author = reply.post?.author;
+        const record = reply.post?.record;
+        
+        if (!author || !record) return '';
+        
+        const avatarHtml = author.avatar 
+          ? `<img src="${author.avatar}" alt="${author.displayName || author.handle}" class="w-10 h-10 rounded-full">`
+          : '';
+        
+        return `
+          <div class="border border-gray-200 rounded-lg p-4 bg-white">
+            <div class="flex items-start gap-3 mb-3">
+              ${avatarHtml}
+              <div class="flex-1 min-w-0">
+                <div class="font-semibold text-heading">
+                  ${author.displayName || author.handle}
+                </div>
+                <div class="text-sm text-muted">
+                  @${author.handle}
+                </div>
+              </div>
+            </div>
+            <div class="prose prose-sm max-w-none">
+              <p class="whitespace-pre-wrap">${record.text}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      container.innerHTML = `<div class="space-y-6">${commentsHtml}</div>`;
+      
+    } catch (error) {
+      container.innerHTML = `
+        <div>
+          <p class="text-muted mb-4">Comments are hosted on Bluesky.</p>
+          <a 
+            href="${postUrl}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+          >
+            View conversation on Bluesky →
+          </a>
+        </div>
+      `;
+    }
+  }
+
   // Handle Reply button click with centered popup
   const replyButton = document.getElementById('reply-button');
   
@@ -145,5 +162,12 @@ const replies = thread?.replies || [];
         window.open(url, '_blank', 'noopener,noreferrer');
       }
     });
+  }
+
+  // Load comments when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadComments);
+  } else {
+    loadComments();
   }
 </script>
