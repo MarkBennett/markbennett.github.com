@@ -25,12 +25,12 @@ const years = Object.keys(postsByYear)
 ---
 
 <Layout title="Blog - MarkBennett.ca">
-  <h1>Blog</h1>
+  <h1 class="text-3xl font-bold mb-8 text-heading">Blog</h1>
   
   {years.map(year => (
-    <section class="year-section">
-      <h2>{year}</h2>
-      <ul class="post-list">
+    <section class="mb-12">
+      <h2 class="text-heading border-b-2 border-border pb-2 mb-6 text-3xl font-semibold">{year}</h2>
+      <ul class="list-none p-0">
         {postsByYear[year].map(post => {
           const formattedDate = new Intl.DateTimeFormat('en-US', {
             year: 'numeric',
@@ -39,14 +39,14 @@ const years = Object.keys(postsByYear)
           }).format(post.data.pubDate);
           
           return (
-            <li class="post-item">
-              <a href={`/blog/${post.slug}`} class="post-link">
-                <h3 class="post-title">{post.data.title}</h3>
+            <li class="mb-8 pb-8 border-b border-border last:border-b-0">
+              <a href={`/blog/${post.slug}`} class="no-underline text-inherit">
+                <h3 class="text-primary text-2xl mb-2 font-semibold hover:text-primary-dark transition-colors">{post.data.title}</h3>
               </a>
               {post.data.description && (
-                <p class="post-summary">{post.data.description}</p>
+                <p class="text-gray-600 mb-2 leading-relaxed">{post.data.description}</p>
               )}
-              <p class="post-date">{formattedDate}</p>
+              <p class="text-muted text-sm italic">{formattedDate}</p>
             </li>
           );
         })}
@@ -54,64 +54,3 @@ const years = Object.keys(postsByYear)
     </section>
   ))}
 </Layout>
-
-<style>
-  h1 {
-    margin-bottom: 2rem;
-  }
-
-  .year-section {
-    margin-bottom: 3rem;
-  }
-
-  .year-section h2 {
-    color: #2c3e50;
-    border-bottom: 2px solid #ecf0f1;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-  }
-
-  .post-list {
-    list-style: none;
-    padding: 0;
-  }
-
-  .post-item {
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #ecf0f1;
-  }
-
-  .post-item:last-child {
-    border-bottom: none;
-  }
-
-  .post-link {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .post-title {
-    color: #3498db;
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    transition: color 0.2s;
-  }
-
-  .post-link:hover .post-title {
-    color: #2980b9;
-  }
-
-  .post-summary {
-    color: #555;
-    margin-bottom: 0.5rem;
-    line-height: 1.6;
-  }
-
-  .post-date {
-    color: #7f8c8d;
-    font-size: 0.9rem;
-    font-style: italic;
-  }
-</style>

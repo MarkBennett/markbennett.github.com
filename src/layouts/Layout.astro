@@ -14,43 +14,42 @@ const { title, description = "MarkBennett.ca - The who, what, where" } = Astro.p
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <title>{title}</title>
-    <link rel="stylesheet" href="/styles/global.css">
 </head>
-<body>
-    <div class="container">
-        <header>
-            <a href="/">
-                <h2>MarkBennett.ca</h2>
-                <p>The who, what, where</p>
+<body class="bg-white text-gray-800 p-5">
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-8">
+            <a href="/" class="no-underline text-inherit">
+                <h2 class="text-4xl mb-2 text-heading font-bold">MarkBennett.ca</h2>
+                <p class="text-muted text-lg">The who, what, where</p>
             </a>
-            <hr />
+            <hr class="border-0 border-t-2 border-border my-6" />
         </header>
 
-        <div class="content-wrapper">
-            <main class="main-content">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <main class="md:col-span-2">
                 <slot />
             </main>
 
-            <aside class="sidebar">
+            <aside class="space-y-8">
                 <section>
-                    <h4>About Me</h4>
-                    <img src="/images/headshot.png" alt="An image of me peeking up from the bottom of the frame">
-                    <p>I'm a programmer and photographer.</p>
+                    <h4 class="text-xl mb-4 text-heading font-semibold">About Me</h4>
+                    <img src="/images/headshot.png" alt="An image of me peeking up from the bottom of the frame" class="w-full h-auto rounded-lg mb-4">
+                    <p class="mb-4">I'm a programmer and photographer.</p>
 
-                    <p>I own <a href="http://burmis.ca">Burmis Studio</a>, and am
-                    one of the organizers of <a href="http://yegrb.com">YEGRB</a>,
+                    <p class="mb-4">I own <a href="http://burmis.ca" class="text-primary hover:text-primary-dark hover:underline">Burmis Studio</a>, and am
+                    one of the organizers of <a href="http://yegrb.com" class="text-primary hover:text-primary-dark hover:underline">YEGRB</a>,
                     the Edmonton Ruby Meetup.</p>
                 </section>
 
                 <section>
-                    <h4>Find Me</h4>
-                    <p>Looking to get in touch? Try one of the communities below.</p>
-                    <ul class="disc">
-                        <li><a href="https://github.com/MarkBennett">GitHub</a></li>
-                        <li><a rel="me" href="https://mastodon.social/@markbennett">Mastodon</a></li>
-                        <li><a href="http://twitter.com/MarkBennett">Twitter</a></li>
-                        <li><a href="https://plus.google.com/104431949275766772757/postst">Google+</a></li>
-                        <li><a href="http://www.facebook.com/mark.f.bennett">Facebook</a></li>
+                    <h4 class="text-xl mb-4 text-heading font-semibold">Find Me</h4>
+                    <p class="mb-4">Looking to get in touch? Try one of the communities below.</p>
+                    <ul class="list-disc ml-6 mb-4 space-y-1">
+                        <li><a href="https://github.com/MarkBennett" class="text-primary hover:text-primary-dark hover:underline">GitHub</a></li>
+                        <li><a rel="me" href="https://mastodon.social/@markbennett" class="text-primary hover:text-primary-dark hover:underline">Mastodon</a></li>
+                        <li><a href="http://twitter.com/MarkBennett" class="text-primary hover:text-primary-dark hover:underline">Twitter</a></li>
+                        <li><a href="https://plus.google.com/104431949275766772757/postst" class="text-primary hover:text-primary-dark hover:underline">Google+</a></li>
+                        <li><a href="http://www.facebook.com/mark.f.bennett" class="text-primary hover:text-primary-dark hover:underline">Facebook</a></li>
                     </ul>
                 </section>
             </aside>
