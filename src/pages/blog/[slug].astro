@@ -21,21 +21,17 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
 ---
 
 <Layout title={post.data.title}>
-    <article class="prose prose-lg max-w-none">
+    <article>
         <h1 class="text-3xl font-bold mb-2 text-heading">{post.data.title}</h1>
         <p class="text-muted text-sm mb-6">Published on {formattedDate}</p>
-        <div class="space-y-4">
+        <div>
             <Content />
         </div>
     </article>
 </Layout>
 
 <style is:global>
-    /* Tailwind Typography-like styling for blog content */
-    article h1 {
-        @apply text-3xl font-bold mb-4 text-heading;
-    }
-    
+    /* Tailwind-based styling for blog content */
     article h2 {
         @apply text-2xl font-semibold mb-3 mt-6 text-heading;
     }
