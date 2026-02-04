@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import BlueskyComments from '../../components/BlueskyComments.astro';
 
 export async function getStaticPaths() {
   const blogPosts = await getCollection('blog');
@@ -27,6 +28,10 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
         <div>
             <Content />
         </div>
+        
+        {post.data.bskyUrl && (
+            <BlueskyComments postUrl={post.data.bskyUrl} />
+        )}
     </article>
 </Layout>
 
