@@ -16,20 +16,20 @@ function formatDate(date: Date): string {
 ---
 
 <Layout title="markbennett.ca">
-    <h4>Projects & Talks</h4>
-    <ul>
+    <h4 class="text-xl mb-4 text-heading font-semibold">Projects & Talks</h4>
+    <ul class="mb-8 space-y-2">
         {sortedProjects.map((project) => (
-            <li><a href={project.data.url}><strong>{project.data.title}</strong>, <em>{project.data.description}</em></a></li>
+            <li><a href={project.data.url} class="text-primary hover:text-primary-dark hover:underline"><strong>{project.data.title}</strong>, <em>{project.data.description}</em></a></li>
         ))}
     </ul>
 
-    <h4>Recent Blog Posts</h4>
-    <ul class="blog-list">
+    <h4 class="text-xl mb-4 text-heading font-semibold">Recent Blog Posts</h4>
+    <ul class="list-none p-0">
         {sortedPosts.map((post) => (
-            <li>
-                <a href={`/blog/${post.slug}/`}><strong>{post.data.title}</strong></a>
-                <div class="blog-meta">{formatDate(post.data.pubDate)}</div>
-                {post.data.description && <p><em>{post.data.description}</em></p>}
+            <li class="mb-6 pb-6 border-b border-border last:border-b-0">
+                <a href={`/blog/${post.slug}/`} class="text-primary hover:text-primary-dark hover:underline"><strong>{post.data.title}</strong></a>
+                <div class="text-muted text-sm my-2">{formatDate(post.data.pubDate)}</div>
+                {post.data.description && <p class="mb-0"><em>{post.data.description}</em></p>}
             </li>
         ))}
     </ul>

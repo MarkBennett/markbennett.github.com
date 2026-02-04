@@ -3,15 +3,17 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Vote 2025 - markbennett.ca">
-    <h1>2025: Adora VS Catra</h1>
-    <p>Welcome to the Vote 2025 page!</p>
-    <p><a href="https://drive.google.com/drive/folders/1XRwl1CF_VplrvGjdqHthIu8lJceMDj7S?usp=drive_link">To help you build
+    <h1 class="text-3xl font-bold mb-4 text-heading">2025: Adora VS Catra</h1>
+    <p class="mb-4">Welcome to the Vote 2025 page!</p>
+    <p class="mb-4"><a href="https://drive.google.com/drive/folders/1XRwl1CF_VplrvGjdqHthIu8lJceMDj7S?usp=drive_link" class="text-primary hover:text-primary-dark hover:underline">To help you build
             your website, you can find some graphics, videos and sounds here.</a></p>
-    <img src="/images/Adora.png" alt="Adora" width="300" height="400">
-    <img src="/images/Catra.png" alt="Catra" width="300" height="400">
+    <div class="flex flex-wrap gap-4 mb-4">
+        <img src="/images/Adora.png" alt="Adora" width="300" height="400" class="rounded-lg">
+        <img src="/images/Catra.png" alt="Catra" width="300" height="400" class="rounded-lg">
+    </div>
 
-    <p>When you're ready you can vote!</p>
+    <p class="mb-4">When you're ready you can vote!</p>
 
     <a href="https://docs.google.com/forms/d/e/1FAIpQLScGYbROn6Hn5VPJVoy6X6wTQBVQPaWqgqlvwx_9yA2tkEC9HQ/viewform?usp=dialog"
-        class="button">Vote Now!</a>
+        class="inline-block px-5 py-2.5 bg-primary text-white no-underline rounded hover:bg-primary-dark transition-colors">Vote Now!</a>
 </Layout>
