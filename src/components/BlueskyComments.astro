@@ -186,10 +186,44 @@ const { postUrl } = Astro.props;
     });
   }
 
-  // Load comments when DOM is ready
+  // Load comments when component is scrolled into view (Intersection Observer)
+  function initLazyLoading() {
+    const commentsSection = document.querySelector('#comments-container')?.parentElement;
+    
+    if (!commentsSection) {
+      console.error('Comments section element not found');
+      return;
+    }
+
+    // Check if Intersection Observer is supported
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Load comments when section becomes visible
+            loadComments();
+            // Stop observing after loading
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        // Start loading when 10% of the component is visible
+        threshold: 0.1,
+        // Load slightly before it comes into view (200px margin)
+        rootMargin: '200px'
+      });
+      
+      observer.observe(commentsSection);
+    } else {
+      // Fallback for browsers without Intersection Observer support
+      loadComments();
+    }
+  }
+
+  // Initialize lazy loading when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadComments);
+    document.addEventListener('DOMContentLoaded', initLazyLoading);
   } else {
-    loadComments();
+    initLazyLoading();
   }
 </script>
