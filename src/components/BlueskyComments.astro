@@ -186,10 +186,6 @@ const { postUrl } = Astro.props;
     });
   }
 
-  // Load comments when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadComments);
-  } else {
-    loadComments();
-  }
+  // Load comments (called after page is idle via client:idle directive)
+  loadComments();
 </script>
