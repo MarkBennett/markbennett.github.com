@@ -1,68 +1,7 @@
 import { useState, useEffect } from "react";
 import BlueskyComment from "./BlueskyComment";
-
-interface Author {
-  avatar?: string;
-  displayName?: string;
-  handle: string;
-}
-
-interface Record {
-  text: string;
-}
-
-interface Post {
-  author: Author;
-  record: Record;
-}
-
-interface Reply {
-  post?: Post;
-}
-
-interface BlueskyCommentsProps {
-  postUrl: string;
-}
-
-// Convert Bluesky web URL to AT URI
-async function webUrlToAtUri(url: string): Promise<string | null> {
-  try {
-    const urlObj = new URL(url);
-    const pathParts = urlObj.pathname.split("/").filter((p) => p);
-
-    // Expected format: /profile/{handle}/post/{postId}
-    if (
-      pathParts.length !== 4 ||
-      pathParts[0] !== "profile" ||
-      pathParts[2] !== "post"
-    ) {
-      return null;
-    }
-
-    const handle = pathParts[1];
-    const postId = pathParts[3];
-
-    // Resolve handle to DID
-    const resolveUrl = `https://public.api.bsky.app/xrpc/com.atproto.identity.resolveHandle?handle=${encodeURIComponent(handle)}`;
-    const resolveResponse = await fetch(resolveUrl);
-
-    if (!resolveResponse.ok) {
-      return null;
-    }
-
-    const resolveData = await resolveResponse.json();
-    const did = resolveData.did;
-
-    if (!did) {
-      return null;
-    }
-
-    return `at://${did}/app.bsky.feed.post/${postId}`;
-  } catch (e) {
-    console.error("Error converting URL to AT URI:", e);
-    return null;
-  }
-}
+import type { Reply, BlueskyCommentsProps } from "./types";
+import { webUrlToAtUri } from "./lib";
 
 export default function BlueskyComments({ postUrl }: BlueskyCommentsProps) {
   const [replies, setReplies] = useState<Reply[]>([]);
@@ -141,13 +80,18 @@ export default function BlueskyComments({ postUrl }: BlueskyCommentsProps) {
         {!loading && !error && replies.length > 0 && (
           <div className="space-y-6">
             {replies.map((reply, index) => {
-              const author = reply.post?.author;
-              const record = reply.post?.record;
+              const post = reply.post;
 
-              if (!author || !record) return null;
+              if (!post || !post.author || !post.record) return null;
 
               return (
-                <BlueskyComment key={index} author={author} record={record} />
+                <BlueskyComment
+                  key={post.uri || index}
+                  author={post.author}
+                  record={post.record}
+                  uri={post.uri}
+                  likeCount={post.likeCount}
+                />
               );
             })}
           </div>
