@@ -1,43 +1,40 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import BlueskyComment from "./BlueskyComment";
 import type { Reply, BlueskyCommentsProps } from "./types";
 import { webUrlToAtUri } from "./lib";
 
+// Polling interval in milliseconds (60 seconds = 1 minute)
+const COMMENT_POLL_INTERVAL = 60000;
+
+async function fetchBlueskyComments(postUrl: string): Promise<Reply[]> {
+  const atUri = await webUrlToAtUri(postUrl);
+
+  if (!atUri) {
+    throw new Error("Invalid URL format");
+  }
+
+  const apiUrl = `https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?uri=${encodeURIComponent(atUri)}`;
+  const response = await fetch(apiUrl);
+
+  if (!response.ok) {
+    throw new Error("API request failed");
+  }
+
+  const data = await response.json();
+  return data.thread?.replies || [];
+}
+
 export default function BlueskyComments({ postUrl }: BlueskyCommentsProps) {
-  const [replies, setReplies] = useState<Reply[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    async function loadComments() {
-      try {
-        const atUri = await webUrlToAtUri(postUrl);
-
-        if (!atUri) {
-          throw new Error("Invalid URL format");
-        }
-
-        const apiUrl = `https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?uri=${encodeURIComponent(atUri)}`;
-        const response = await fetch(apiUrl);
-
-        if (!response.ok) {
-          throw new Error("API request failed");
-        }
-
-        const data = await response.json();
-        const fetchedReplies = data.thread?.replies || [];
-
-        setReplies(fetchedReplies);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error loading Bluesky comments:", err);
-        setError(true);
-        setLoading(false);
-      }
-    }
-
-    loadComments();
-  }, [postUrl]);
+  const {
+    data: replies = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["bluesky-comments", postUrl],
+    queryFn: () => fetchBlueskyComments(postUrl),
+    refetchInterval: COMMENT_POLL_INTERVAL, // Poll every 60 seconds (1 minute)
+    refetchOnWindowFocus: true, // Refetch when tab regains focus
+  });
 
   return (
     <div className="mt-12 pt-8 border-t border-gray-300">
@@ -55,9 +52,9 @@ export default function BlueskyComments({ postUrl }: BlueskyCommentsProps) {
       </div>
 
       <div>
-        {loading && <p className="text-muted">Loading comments...</p>}
+        {isLoading && <p className="text-muted">Loading comments...</p>}
 
-        {error && (
+        {isError && (
           <div>
             <p className="text-muted mb-4">Comments are hosted on Bluesky.</p>
             <a
@@ -71,13 +68,13 @@ export default function BlueskyComments({ postUrl }: BlueskyCommentsProps) {
           </div>
         )}
 
-        {!loading && !error && replies.length === 0 && (
+        {!isLoading && !isError && replies.length === 0 && (
           <p className="text-muted">
             No comments yet. Be the first to reply on Bluesky!
           </p>
         )}
 
-        {!loading && !error && replies.length > 0 && (
+        {!isLoading && !isError && replies.length > 0 && (
           <div className="space-y-6">
             {replies.map((reply, index) => {
               const post = reply.post;
