@@ -8,15 +8,16 @@ const { postUrl } = Astro.props;
 
 <div class="mt-12 pt-8 border-t border-gray-300">
   <h2 class="text-2xl font-bold mb-6 text-heading">Comments</h2>
-  
+
   <div class="mb-6">
-    <button
-      id="reply-button"
-      data-url={postUrl}
-      class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors cursor-pointer"
+    <a
+      class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors cursor-pointer hover:no-underline hover:text-white"
+      href={postUrl}
+      target="_blank"
+      rel="noreferrer noopener"
     >
       Reply on Bluesky
-    </button>
+    </a>
   </div>
 
   <div id="comments-container">
@@ -29,88 +30,94 @@ const { postUrl } = Astro.props;
   async function webUrlToAtUri(url) {
     try {
       const urlObj = new URL(url);
-      const pathParts = urlObj.pathname.split('/').filter(p => p);
-      
+      const pathParts = urlObj.pathname.split("/").filter((p) => p);
+
       // Expected format: /profile/{handle}/post/{postId}
-      if (pathParts.length !== 4 || pathParts[0] !== 'profile' || pathParts[2] !== 'post') {
+      if (
+        pathParts.length !== 4 ||
+        pathParts[0] !== "profile" ||
+        pathParts[2] !== "post"
+      ) {
         return null;
       }
-      
+
       const handle = pathParts[1];
       const postId = pathParts[3];
-      
+
       // Resolve handle to DID
       const resolveUrl = `https://public.api.bsky.app/xrpc/com.atproto.identity.resolveHandle?handle=${encodeURIComponent(handle)}`;
       const resolveResponse = await fetch(resolveUrl);
-      
+
       if (!resolveResponse.ok) {
         return null;
       }
-      
+
       const resolveData = await resolveResponse.json();
       const did = resolveData.did;
-      
+
       if (!did) {
         return null;
       }
-      
+
       return `at://${did}/app.bsky.feed.post/${postId}`;
     } catch (e) {
-      console.error('Error converting URL to AT URI:', e);
+      console.error("Error converting URL to AT URI:", e);
       return null;
     }
   }
 
   // Escape HTML to prevent XSS
   function escapeHtml(text) {
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;
   }
 
   // Load comments on page load
   async function loadComments() {
-    const container = document.getElementById('comments-container');
-    
+    const container = document.getElementById("comments-container");
+
     if (!container) {
-      console.error('Comments container element not found');
+      console.error("Comments container element not found");
       return;
     }
-    
+
     try {
       const atUri = await webUrlToAtUri(postUrl);
-      
+
       if (!atUri) {
-        throw new Error('Invalid URL format');
+        throw new Error("Invalid URL format");
       }
-      
+
       const apiUrl = `https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?uri=${encodeURIComponent(atUri)}`;
       const response = await fetch(apiUrl);
-      
+
       if (!response.ok) {
-        throw new Error('API request failed');
+        throw new Error("API request failed");
       }
-      
+
       const data = await response.json();
       const replies = data.thread?.replies || [];
-      
+
       if (replies.length === 0) {
-        container.innerHTML = '<p class="text-muted">No comments yet. Be the first to reply on Bluesky!</p>';
+        container.innerHTML =
+          '<p class="text-muted">No comments yet. Be the first to reply on Bluesky!</p>';
         return;
       }
-      
+
       // Render comments
-      const commentsHtml = replies.map(reply => {
-        const author = reply.post?.author;
-        const record = reply.post?.record;
-        
-        if (!author || !record) return '';
-        
-        const avatarHtml = author.avatar 
-          ? `<img src="${escapeHtml(author.avatar)}" alt="${escapeHtml(author.displayName || author.handle)}" class="w-10 h-10 rounded-full">`
-          : '';
-        
-        return `
+      const commentsHtml = replies
+        .map((reply) => {
+          const author = reply.post?.author;
+          const record = reply.post?.record;
+
+          if (!author || !record) return "";
+
+          const avatarHtml = author.avatar
+            ? `<img src="${escapeHtml(author.avatar)}" alt="${escapeHtml(author.displayName || author.handle)}" class="w-10 h-10 rounded-full">`
+            : "";
+
+          return `
           <div class="border border-gray-200 rounded-lg p-4 bg-white">
             <div class="flex items-start gap-3 mb-3">
               ${avatarHtml}
@@ -128,16 +135,16 @@ const { postUrl } = Astro.props;
             </div>
           </div>
         `;
-      }).join('');
-      
+        })
+        .join("");
+
       container.innerHTML = `<div class="space-y-6">${commentsHtml}</div>`;
-      
     } catch (error) {
-      console.error('Error loading Bluesky comments:', error);
+      console.error("Error loading Bluesky comments:", error);
       container.innerHTML = `
         <div>
           <p class="text-muted mb-4">Comments are hosted on Bluesky.</p>
-          <a 
+          <a
             href="${escapeHtml(postUrl)}"
             target="_blank"
             rel="noopener noreferrer"
@@ -148,42 +155,6 @@ const { postUrl } = Astro.props;
         </div>
       `;
     }
-  }
-
-  // Handle Reply button click with centered popup
-  const replyButton = document.getElementById('reply-button');
-  
-  if (replyButton) {
-    replyButton.addEventListener('click', () => {
-      const url = replyButton.getAttribute('data-url');
-      if (!url) return;
-      
-      // Calculate centered position
-      const width = 600;
-      const height = 700;
-      const left = (window.screen.width - width) / 2;
-      const top = (window.screen.height - height) / 2;
-      
-      // Try to open centered popup
-      const popup = window.open(
-        url,
-        'bluesky-reply',
-        `width=${width},height=${height},left=${left},top=${top},popup`
-      );
-      
-      // Set opener to null for security
-      if (popup) {
-        popup.opener = null;
-      }
-      
-      // Fallback: if popup blocked, open in new tab
-      if (!popup || popup.closed || typeof popup.closed === 'undefined') {
-        const fallback = window.open(url, '_blank');
-        if (fallback) {
-          fallback.opener = null;
-        }
-      }
-    });
   }
 
   // Load comments (called after page is idle via client:idle directive)
