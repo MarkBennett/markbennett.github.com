@@ -1,4 +1,12 @@
 ---
+import {
+  SiGithub,
+  SiBluesky,
+  SiMastodon,
+  SiSignal,
+  SiFacebook,
+} from "react-icons/si";
+
 interface Props {
   title: string;
   description?: string;
@@ -57,45 +65,44 @@ const { title, description = "MarkBennett.ca - The who, what, where" } =
               <h4 class="text-xl mb-4 text-heading font-semibold">
                 Let's Connect
               </h4>
-              <ul class="list-disc ml-6 mb-4 space-y-1">
-                <li>
-                  <a
-                    href="https://github.com/MarkBennett"
-                    class="text-primary hover:text-primary-dark hover:underline"
-                    >GitHub</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="https://bsky.app/profile/markbennett.ca"
-                    class="text-primary hover:text-primary-dark hover:underline"
-                  >
-                    Bluesky
-                  </a>
-                </li>
-                <li>
-                  <a
-                    rel="me"
-                    href="https://mastodon.social/@markbennett"
-                    class="text-primary hover:text-primary-dark hover:underline"
-                    >Mastodon</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    class="text-primary hover:text-primary-dark hover:underline"
-                    >Signal</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="http://www.facebook.com/mark.f.bennett"
-                    class="text-primary hover:text-primary-dark hover:underline"
-                    >Facebook</a
-                  >
-                </li>
-              </ul>
+              <div class="flex gap-4 mb-4">
+                <a
+                  href="https://github.com/MarkBennett"
+                  class="text-primary hover:text-primary-dark transition-colors"
+                  aria-label="GitHub"
+                >
+                  <SiGithub className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://bsky.app/profile/markbennett.ca"
+                  class="text-primary hover:text-primary-dark transition-colors"
+                  aria-label="Bluesky"
+                >
+                  <SiBluesky className="w-6 h-6" />
+                </a>
+                <a
+                  rel="me"
+                  href="https://mastodon.social/@markbennett"
+                  class="text-primary hover:text-primary-dark transition-colors"
+                  aria-label="Mastodon"
+                >
+                  <SiMastodon className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://signal.me/#u/MarkBennett.01"
+                  class="text-primary hover:text-primary-dark transition-colors"
+                  aria-label="Signal"
+                >
+                  <SiSignal className="w-6 h-6" />
+                </a>
+                <a
+                  href="http://www.facebook.com/mark.f.bennett"
+                  class="text-primary hover:text-primary-dark transition-colors"
+                  aria-label="Facebook"
+                >
+                  <SiFacebook className="w-6 h-6" />
+                </a>
+              </div>
             </section>
           </section>
         </aside>
