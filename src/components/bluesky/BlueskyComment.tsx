@@ -1,6 +1,41 @@
 import type { BlueskyCommentProps } from "./types";
 import { getProfileUrl, getPostUrl, formatTimestamp } from "./lib";
 
+// Heart icon variants
+const HeartOutline = () => (
+  <svg
+    className="w-4 h-4"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+    />
+  </svg>
+);
+
+const HeartFilled = () => (
+  <svg
+    className="w-4 h-4"
+    fill="#ec4899"
+    stroke="#ec4899"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+    />
+  </svg>
+);
+
 export default function BlueskyComment({
   author,
   record,
@@ -10,6 +45,7 @@ export default function BlueskyComment({
   const profileUrl = getProfileUrl(author.handle);
   const postUrl = getPostUrl(author.handle, uri);
   const formattedTime = formatTimestamp(record.createdAt);
+  const hasLikes = likeCount > 0;
 
   return (
     <div className="border border-gray-200 rounded-lg p-4 bg-white">
@@ -90,40 +126,20 @@ export default function BlueskyComment({
             href={postUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-muted hover:text-primary transition-colors"
+            className={`flex items-center gap-1.5 transition-colors ${
+              hasLikes ? "text-pink-500" : "text-muted hover:text-primary"
+            }`}
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              />
-            </svg>
+            {hasLikes ? <HeartFilled /> : <HeartOutline />}
             <span className="text-sm">{likeCount}</span>
           </a>
         ) : (
-          <div className="flex items-center gap-1.5 text-muted">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              />
-            </svg>
+          <div
+            className={`flex items-center gap-1.5 ${
+              hasLikes ? "text-pink-500" : "text-muted"
+            }`}
+          >
+            {hasLikes ? <HeartFilled /> : <HeartOutline />}
             <span className="text-sm">{likeCount}</span>
           </div>
         )}
