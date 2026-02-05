@@ -1,0 +1,36 @@
+{
+  // Use Prettier as the default formatter for all file types
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Automatically format files when saving
+  "editor.formatOnSave": true,
+
+  // Automatically fix ESLint errors/warnings when saving
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // Explicitly set Prettier as formatter for Astro files
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Explicitly set Prettier as formatter for TypeScript files
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Explicitly set Prettier as formatter for TypeScript React files (.tsx)
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Enable ESLint validation for these file types
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "astro", // Enable ESLint for .astro files
+    "typescript",
+    "typescriptreact"
+  ]
+}

@@ -1,22 +1,25 @@
 ---
-import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
 
 // Get all blog posts and sort by date (newest first)
-const allPosts = await getCollection('blog');
-const sortedPosts = allPosts.sort((a, b) => 
-  b.data.pubDate.getTime() - a.data.pubDate.getTime()
+const allPosts = await getCollection("blog");
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
 );
 
 // Group posts by year
-const postsByYear = sortedPosts.reduce((acc, post) => {
-  const year = post.data.pubDate.getFullYear();
-  if (!acc[year]) {
-    acc[year] = [];
-  }
-  acc[year].push(post);
-  return acc;
-}, {} as Record<number, typeof sortedPosts>);
+const postsByYear = sortedPosts.reduce(
+  (acc, post) => {
+    const year = post.data.pubDate.getFullYear();
+    if (!acc[year]) {
+      acc[year] = [];
+    }
+    acc[year].push(post);
+    return acc;
+  },
+  {} as Record<number, typeof sortedPosts>
+);
 
 // Get sorted years (newest first)
 const years = Object.keys(postsByYear)
@@ -26,31 +29,42 @@ const years = Object.keys(postsByYear)
 
 <Layout title="Blog - MarkBennett.ca">
   <h1 class="text-3xl font-bold mb-8 text-heading">Blog</h1>
-  
-  {years.map(year => (
-    <section class="mb-12">
-      <h2 class="text-heading border-b-2 border-border pb-2 mb-6 text-3xl font-semibold">{year}</h2>
-      <ul class="list-none p-0">
-        {postsByYear[year].map(post => {
-          const formattedDate = new Intl.DateTimeFormat('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          }).format(post.data.pubDate);
-          
-          return (
-            <li class="mb-8 pb-8 border-b border-border last:border-b-0">
-              <a href={`/blog/${post.slug}`} class="no-underline text-inherit">
-                <h3 class="text-primary text-2xl mb-2 font-semibold hover:text-primary-dark transition-colors">{post.data.title}</h3>
-              </a>
-              {post.data.description && (
-                <p class="text-gray-600 mb-2 leading-relaxed">{post.data.description}</p>
-              )}
-              <p class="text-muted text-sm italic">{formattedDate}</p>
-            </li>
-          );
-        })}
-      </ul>
-    </section>
-  ))}
+
+  {
+    years.map((year) => (
+      <section class="mb-12">
+        <h2 class="text-heading border-b-2 border-border pb-2 mb-6 text-3xl font-semibold">
+          {year}
+        </h2>
+        <ul class="list-none p-0">
+          {postsByYear[year].map((post) => {
+            const formattedDate = new Intl.DateTimeFormat("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }).format(post.data.pubDate);
+
+            return (
+              <li class="mb-8 pb-8 border-b border-border last:border-b-0">
+                <a
+                  href={`/blog/${post.slug}`}
+                  class="no-underline text-inherit"
+                >
+                  <h3 class="text-primary text-2xl mb-2 font-semibold hover:text-primary-dark transition-colors">
+                    {post.data.title}
+                  </h3>
+                </a>
+                {post.data.description && (
+                  <p class="text-gray-600 mb-2 leading-relaxed">
+                    {post.data.description}
+                  </p>
+                )}
+                <p class="text-muted text-sm italic">{formattedDate}</p>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))
+  }
 </Layout>
