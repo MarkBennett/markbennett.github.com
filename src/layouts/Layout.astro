@@ -4,56 +4,102 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "MarkBennett.ca - The who, what, where" } = Astro.props;
+const { title, description = "MarkBennett.ca - The who, what, where" } =
+  Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <title>{title}</title>
-</head>
-<body class="bg-white text-gray-800 p-5">
+  </head>
+  <body class="bg-white text-gray-800 p-5">
     <div class="max-w-7xl mx-auto">
-        <header class="mb-8">
-            <a href="/" class="no-underline text-inherit">
-                <h2 class="text-4xl mb-2 text-heading font-bold">MarkBennett.ca</h2>
-                <p class="text-muted text-lg">The who, what, where</p>
-            </a>
-            <hr class="border-0 border-t-2 border-border my-6" />
-        </header>
+      <header class="mb-8">
+        <a href="/" class="no-underline text-inherit">
+          <h2 class="text-4xl mb-2 text-heading font-bold">MarkBennett.ca</h2>
+          <p class="text-muted text-lg">The who, what, where</p>
+        </a>
+        <hr class="border-0 border-t-2 border-border my-6" />
+      </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <main class="md:col-span-2">
-                <slot />
-            </main>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <main class="md:col-span-2">
+          <slot />
+        </main>
 
-            <aside class="space-y-8">
-                <section>
-                    <h4 class="text-xl mb-4 text-heading font-semibold">About Me</h4>
-                    <img src="/images/headshot.png" alt="An image of me peeking up from the bottom of the frame" class="w-full h-auto rounded-lg mb-4">
-                    <p class="mb-4">I'm a programmer and photographer.</p>
+        <aside class="space-y-8">
+          <section>
+            <h4 class="text-xl mb-4 text-heading font-semibold">About Me</h4>
+            <img
+              src="/images/headshot.png"
+              alt="An image of me peeking up from the bottom of the frame"
+              class="w-full h-auto rounded-lg mb-4"
+            />
+            <p class="mb-4">I'm a programmer and photographer.</p>
 
-                    <p class="mb-4">I own <a href="http://burmis.ca" class="text-primary hover:text-primary-dark hover:underline">Burmis Studio</a>, and am
-                    one of the organizers of <a href="http://yegrb.com" class="text-primary hover:text-primary-dark hover:underline">YEGRB</a>,
-                    the Edmonton Ruby Meetup.</p>
-                </section>
+            <p class="mb-4">
+              I own <a
+                href="http://burmis.ca"
+                class="text-primary hover:text-primary-dark hover:underline"
+                >Burmis Studio</a
+              >, and am one of the organizers of <a
+                href="http://yegrb.com"
+                class="text-primary hover:text-primary-dark hover:underline"
+                >YEGRB</a
+              >, the Edmonton Ruby Meetup.
+            </p>
+          </section>
 
-                <section>
-                    <h4 class="text-xl mb-4 text-heading font-semibold">Find Me</h4>
-                    <p class="mb-4">Looking to get in touch? Try one of the communities below.</p>
-                    <ul class="list-disc ml-6 mb-4 space-y-1">
-                        <li><a href="https://github.com/MarkBennett" class="text-primary hover:text-primary-dark hover:underline">GitHub</a></li>
-                        <li><a rel="me" href="https://mastodon.social/@markbennett" class="text-primary hover:text-primary-dark hover:underline">Mastodon</a></li>
-                        <li><a href="http://twitter.com/MarkBennett" class="text-primary hover:text-primary-dark hover:underline">Twitter</a></li>
-                        <li><a href="https://plus.google.com/104431949275766772757/postst" class="text-primary hover:text-primary-dark hover:underline">Google+</a></li>
-                        <li><a href="http://www.facebook.com/mark.f.bennett" class="text-primary hover:text-primary-dark hover:underline">Facebook</a></li>
-                    </ul>
-                </section>
-            </aside>
-        </div>
+          <section>
+            <h4 class="text-xl mb-4 text-heading font-semibold">Find Me</h4>
+            <p class="mb-4">
+              Looking to get in touch? Try one of the communities below.
+            </p>
+            <ul class="list-disc ml-6 mb-4 space-y-1">
+              <li>
+                <a
+                  href="https://github.com/MarkBennett"
+                  class="text-primary hover:text-primary-dark hover:underline"
+                  >GitHub</a
+                >
+              </li>
+              <li>
+                <a
+                  rel="me"
+                  href="https://mastodon.social/@markbennett"
+                  class="text-primary hover:text-primary-dark hover:underline"
+                  >Mastodon</a
+                >
+              </li>
+              <li>
+                <a
+                  href="http://twitter.com/MarkBennett"
+                  class="text-primary hover:text-primary-dark hover:underline"
+                  >Twitter</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://plus.google.com/104431949275766772757/postst"
+                  class="text-primary hover:text-primary-dark hover:underline"
+                  >Google+</a
+                >
+              </li>
+              <li>
+                <a
+                  href="http://www.facebook.com/mark.f.bennett"
+                  class="text-primary hover:text-primary-dark hover:underline"
+                  >Facebook</a
+                >
+              </li>
+            </ul>
+          </section>
+        </aside>
+      </div>
     </div>
-</body>
+  </body>
 </html>

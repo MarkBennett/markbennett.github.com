@@ -5,7 +5,7 @@
  * Format: at://did:plc:abc123/app.bsky.feed.post/xyz456
  */
 export function extractPostId(atUri: string): string | null {
-  const match = atUri.match(/app\.bsky\.feed\.post\/([^\/]+)$/);
+  const match = atUri.match(/app\.bsky\.feed\.post\/([^/]+)$/);
   return match ? match[1] : null;
 }
 
@@ -14,7 +14,7 @@ export function extractPostId(atUri: string): string | null {
  * Format: https://bsky.app/profile/{handle}/post/{postId}
  */
 export function parseBlueskyUrl(
-  url: string,
+  url: string
 ): { handle: string; postId: string } | null {
   try {
     const urlObj = new URL(url);

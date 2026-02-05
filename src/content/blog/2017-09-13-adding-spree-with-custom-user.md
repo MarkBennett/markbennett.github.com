@@ -6,9 +6,9 @@ pubDate: 2017-09-13
 
 These steps document this process for my own records, but anyone is welcome to use them. I've taken these steps from a few places:
 
-1) [Spree Docs Getting Started](http://guides.spreecommerce.org/developer/getting_started_tutorial.html)
-2) [Spree Docs Custom Auth](http://guides.spreecommerce.org/developer/authentication.html)
-3) [Devise Docs](https://github.com/plataformatec/devise)
+1. [Spree Docs Getting Started](http://guides.spreecommerce.org/developer/getting_started_tutorial.html)
+2. [Spree Docs Custom Auth](http://guides.spreecommerce.org/developer/authentication.html)
+3. [Devise Docs](https://github.com/plataformatec/devise)
 
 ```bash
 cd <YOUR_AWESOME_RAILS_APP>
@@ -37,7 +37,7 @@ class User < ApplicationRecord
   include Spree::UserMethods
   include Spree::UserPaymentSource
   include Spree::UserReporting
-  
+
   <YOUR CLASS WOULD CONTINUE HERE>
 end
 ```
