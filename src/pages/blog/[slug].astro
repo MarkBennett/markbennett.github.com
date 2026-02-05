@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import BlueskyComments from "../../components/bluesky/BlueskyComments";
+import BlueskyCommentsWrapper from "../../components/bluesky/BlueskyCommentsWrapper";
 
 export async function getStaticPaths() {
   const blogPosts = await getCollection("blog");
@@ -31,7 +31,7 @@ const formattedDate = new Intl.DateTimeFormat("en-US", {
 
     {
       post.data.bskyUrl && (
-        <BlueskyComments postUrl={post.data.bskyUrl} client:idle />
+        <BlueskyCommentsWrapper postUrl={post.data.bskyUrl} client:idle />
       )
     }
   </article>
