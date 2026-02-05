@@ -1,11 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import BlueskyComments from '../../components/BlueskyComments.astro';
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import BlueskyComments from "../../components/BlueskyComments.tsx";
 
 export async function getStaticPaths() {
-  const blogPosts = await getCollection('blog');
-  return blogPosts.map(post => ({
+  const blogPosts = await getCollection("blog");
+  return blogPosts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
   }));
@@ -14,70 +14,72 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-const formattedDate = new Intl.DateTimeFormat('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric'
+const formattedDate = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
 }).format(post.data.pubDate);
 ---
 
 <Layout title={post.data.title}>
-    <article>
-        <h1 class="text-3xl font-bold mb-2 text-heading">{post.data.title}</h1>
-        <p class="text-muted text-sm mb-6">Published on {formattedDate}</p>
-        <div>
-            <Content />
-        </div>
-        
-        {post.data.bskyUrl && (
-            <BlueskyComments postUrl={post.data.bskyUrl} client:idle />
-        )}
-    </article>
+  <article>
+    <h1 class="text-3xl font-bold mb-2 text-heading">{post.data.title}</h1>
+    <p class="text-muted text-sm mb-6">Published on {formattedDate}</p>
+    <div>
+      <Content />
+    </div>
+
+    {
+      post.data.bskyUrl && (
+        <BlueskyComments postUrl={post.data.bskyUrl} client:idle />
+      )
+    }
+  </article>
 </Layout>
 
 <style is:global>
-    /* Tailwind-based styling for blog content */
-    article h2 {
-        @apply text-2xl font-semibold mb-3 mt-6 text-heading;
-    }
-    
-    article h3 {
-        @apply text-xl font-semibold mb-2 mt-4 text-heading;
-    }
-    
-    article h4 {
-        @apply text-lg font-semibold mb-2 mt-4 text-heading;
-    }
-    
-    article p {
-        @apply mb-4 leading-relaxed;
-    }
-    
-    article a {
-        @apply text-primary hover:text-primary-dark hover:underline;
-    }
-    
-    article ul {
-        @apply list-disc ml-6 mb-4 space-y-1;
-    }
-    
-    article ol {
-        @apply list-decimal ml-6 mb-4 space-y-1;
-    }
-    
-    article pre {
-        @apply bg-gray-100 border border-gray-300 rounded p-4 overflow-x-auto mb-4;
-    }
-    
-    article code {
-        @apply font-mono bg-gray-100 px-1.5 py-0.5 rounded text-sm;
-    }
-    
-    article pre code {
-        @apply bg-transparent p-0;
-    }
-    
-    article blockquote {
-        @apply border-l-4 border-gray-300 pl-4 italic my-4;
-    }
+  /* Tailwind-based styling for blog content */
+  article h2 {
+    @apply text-2xl font-semibold mb-3 mt-6 text-heading;
+  }
+
+  article h3 {
+    @apply text-xl font-semibold mb-2 mt-4 text-heading;
+  }
+
+  article h4 {
+    @apply text-lg font-semibold mb-2 mt-4 text-heading;
+  }
+
+  article p {
+    @apply mb-4 leading-relaxed;
+  }
+
+  article a {
+    @apply text-primary hover:text-primary-dark hover:underline;
+  }
+
+  article ul {
+    @apply list-disc ml-6 mb-4 space-y-1;
+  }
+
+  article ol {
+    @apply list-decimal ml-6 mb-4 space-y-1;
+  }
+
+  article pre {
+    @apply bg-gray-100 border border-gray-300 rounded p-4 overflow-x-auto mb-4;
+  }
+
+  article code {
+    @apply font-mono bg-gray-100 px-1.5 py-0.5 rounded text-sm;
+  }
+
+  article pre code {
+    @apply bg-transparent p-0;
+  }
+
+  article blockquote {
+    @apply border-l-4 border-gray-300 pl-4 italic my-4;
+  }
 </style>
