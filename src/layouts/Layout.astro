@@ -1,4 +1,13 @@
 ---
+import {
+  SiGithub,
+  SiBluesky,
+  SiMastodon,
+  SiSignal,
+  SiFacebook,
+  SiInstagram,
+} from "react-icons/si";
+
 interface Props {
   title: string;
   description?: string;
@@ -19,9 +28,19 @@ const { title, description = "MarkBennett.ca - The who, what, where" } =
   <body class="bg-white text-gray-800 p-5">
     <div class="max-w-7xl mx-auto">
       <header class="mb-8">
-        <a href="/" class="no-underline text-inherit">
-          <h2 class="text-4xl mb-2 text-heading font-bold">MarkBennett.ca</h2>
-          <p class="text-muted text-lg">The who, what, where</p>
+        <a
+          href="/"
+          class="no-underline text-inherit flex justify-start gap-4 items-center"
+        >
+          <img
+            src="/images/profile-2026.jpg"
+            alt="An image of me peeking up from the bottom of the frame"
+            class="w-24 h-24 rounded-full object-cover mb-4"
+          />
+          <div>
+            <h2 class="text-4xl mb-2 text-heading font-bold">MarkBennett.ca</h2>
+            <p class="text-muted text-lg">The who, what, where</p>
+          </div>
         </a>
         <hr class="border-0 border-t-2 border-border my-6" />
       </header>
@@ -34,69 +53,58 @@ const { title, description = "MarkBennett.ca - The who, what, where" } =
         <aside class="space-y-8">
           <section>
             <h4 class="text-xl mb-4 text-heading font-semibold">About Me</h4>
-            <img
-              src="/images/headshot.png"
-              alt="An image of me peeking up from the bottom of the frame"
-              class="w-full h-auto rounded-lg mb-4"
-            />
-            <p class="mb-4">I'm a programmer and photographer.</p>
-
             <p class="mb-4">
-              I own <a
-                href="http://burmis.ca"
-                class="text-primary hover:text-primary-dark hover:underline"
-                >Burmis Studio</a
-              >, and am one of the organizers of <a
-                href="http://yegrb.com"
-                class="text-primary hover:text-primary-dark hover:underline"
-                >YEGRB</a
-              >, the Edmonton Ruby Meetup.
+              I'm a dad, programmer, and runner. Aspiring swimmer and French
+              speaker.
             </p>
-          </section>
-
-          <section>
-            <h4 class="text-xl mb-4 text-heading font-semibold">Find Me</h4>
             <p class="mb-4">
-              Looking to get in touch? Try one of the communities below.
+              I live in Edmonton, Canada and am married to Matthew Woodley.
             </p>
-            <ul class="list-disc ml-6 mb-4 space-y-1">
-              <li>
+            <p class="mb-4">🏳️‍🌈🧑🏻‍💻🏃🏻🍁</p>
+
+            <section>
+              <h4 class="text-xl mb-4 text-heading font-semibold">
+                Let's Connect
+              </h4>
+              <div class="flex gap-4 mb-4">
                 <a
                   href="https://github.com/MarkBennett"
-                  class="text-primary hover:text-primary-dark hover:underline"
-                  >GitHub</a
+                  class="text-primary hover:text-primary-dark transition-colors"
+                  aria-label="GitHub"
                 >
-              </li>
-              <li>
+                  <SiGithub className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://bsky.app/profile/markbennett.ca"
+                  class="text-primary hover:text-primary-dark transition-colors"
+                  aria-label="Bluesky"
+                >
+                  <SiBluesky className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://www.instagram.com/markbennett.ca?igsh=MXRtdGVpaTg2dnRlYg=="
+                  class="text-primary hover:text-primary-dark transition-colors"
+                  aria-label="Instagram"
+                >
+                  <SiInstagram className="w-6 h-6" />
+                </a>
                 <a
                   rel="me"
                   href="https://mastodon.social/@markbennett"
-                  class="text-primary hover:text-primary-dark hover:underline"
-                  >Mastodon</a
+                  class="text-primary hover:text-primary-dark transition-colors"
+                  aria-label="Mastodon"
                 >
-              </li>
-              <li>
-                <a
-                  href="http://twitter.com/MarkBennett"
-                  class="text-primary hover:text-primary-dark hover:underline"
-                  >Twitter</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://plus.google.com/104431949275766772757/postst"
-                  class="text-primary hover:text-primary-dark hover:underline"
-                  >Google+</a
-                >
-              </li>
-              <li>
+                  <SiMastodon className="w-6 h-6" />
+                </a>
                 <a
                   href="http://www.facebook.com/mark.f.bennett"
-                  class="text-primary hover:text-primary-dark hover:underline"
-                  >Facebook</a
+                  class="text-primary hover:text-primary-dark transition-colors"
+                  aria-label="Facebook"
                 >
-              </li>
-            </ul>
+                  <SiFacebook className="w-6 h-6" />
+                </a>
+              </div>
+            </section>
           </section>
         </aside>
       </div>
