@@ -5,6 +5,7 @@ import {
   SiMastodon,
   SiSignal,
   SiFacebook,
+  SiInstagram,
 } from "react-icons/si";
 
 interface Props {
@@ -81,19 +82,19 @@ const { title, description = "MarkBennett.ca - The who, what, where" } =
                   <SiBluesky className="w-6 h-6" />
                 </a>
                 <a
+                  href="https://www.instagram.com/markbennett.ca?igsh=MXRtdGVpaTg2dnRlYg=="
+                  class="text-primary hover:text-primary-dark transition-colors"
+                  aria-label="Instagram"
+                >
+                  <SiInstagram className="w-6 h-6" />
+                </a>
+                <a
                   rel="me"
                   href="https://mastodon.social/@markbennett"
                   class="text-primary hover:text-primary-dark transition-colors"
                   aria-label="Mastodon"
                 >
                   <SiMastodon className="w-6 h-6" />
-                </a>
-                <a
-                  href="https://signal.me/#u/MarkBennett.01"
-                  class="text-primary hover:text-primary-dark transition-colors"
-                  aria-label="Signal"
-                >
-                  <SiSignal className="w-6 h-6" />
                 </a>
                 <a
                   href="http://www.facebook.com/mark.f.bennett"
