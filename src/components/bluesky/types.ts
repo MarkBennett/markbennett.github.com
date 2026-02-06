@@ -1,4 +1,4 @@
-// Shared BlueSky type definitions
+// Shared Bluesky type definitions
 
 export interface Author {
   avatar?: string;

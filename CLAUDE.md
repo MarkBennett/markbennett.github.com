@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal website for markbennett.ca built with Astro 5, deployed to Cloudflare via Wrangler. The site is a static blog with BlueSky comment integration.
+Personal website for markbennett.ca built with Astro 5, deployed to Cloudflare via Wrangler. The site is a static blog with Bluesky comment integration.
 
 ## Development Commands
 
@@ -38,19 +38,19 @@ Defined in `src/content/config.ts` with Zod validation:
    - Required: `title`, `description`, `type` (enum: 'project' | 'talk'), `url`, `order` (number)
    - Used for portfolio/work display
 
-### BlueSky Comments Integration
+### Bluesky Comments Integration
 
 Located in `src/components/BlueskyComments.astro`:
 
 - **Client-side rendered** via inline `<script>` tag with `define:vars`
-- **API Integration**: Calls BlueSky public API (`public.api.bsky.app`)
+- **API Integration**: Calls Bluesky public API (`public.api.bsky.app`)
   - Resolves handle to DID via `com.atproto.identity.resolveHandle`
   - Fetches thread via `app.bsky.feed.getPostThread`
 - **Security**: Uses `escapeHtml()` to prevent XSS attacks
 - **URL Conversion**: Converts web URLs (`bsky.app/profile/{handle}/post/{id}`) to AT-URIs (`at://{did}/app.bsky.feed.post/{id}`)
-- **Reply Button**: Opens BlueSky in centered popup window with security measures (`popup.opener = null`)
+- **Reply Button**: Opens Bluesky in centered popup window with security measures (`popup.opener = null`)
 
-To add comments to a blog post, include `bskyUrl` in frontmatter pointing to the BlueSky post URL.
+To add comments to a blog post, include `bskyUrl` in frontmatter pointing to the Bluesky post URL.
 
 ### Styling System
 
@@ -87,11 +87,11 @@ To add comments to a blog post, include `bskyUrl` in frontmatter pointing to the
    ```
 3. Write content in Markdown (MDX supported)
 
-### BlueSky Comments Setup
+### Bluesky Comments Setup
 
-1. Create a post on BlueSky about the blog article
-2. Add `bskyUrl` to blog post frontmatter with the BlueSky post URL
-3. Comments component will automatically render replies from BlueSky
+1. Create a post on Bluesky about the blog article
+2. Add `bskyUrl` to blog post frontmatter with the Bluesky post URL
+3. Comments component will automatically render replies from Bluesky
 
 ### Git Workflow
 
@@ -106,7 +106,7 @@ To add comments to a blog post, include `bskyUrl` in frontmatter pointing to the
 - Tailwind CSS (utility-first styling)
 - MDX (Markdown with JSX)
 - Cloudflare Workers (deployment platform via Wrangler)
-- BlueSky AT Protocol API (comments integration)
+- Bluesky AT Protocol API (comments integration)
 
 ## Deployment
 

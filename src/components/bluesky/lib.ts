@@ -1,4 +1,4 @@
-// BlueSky utility functions
+// Bluesky utility functions
 
 /**
  * Extract post ID from AT-URI
@@ -10,7 +10,7 @@ export function extractPostId(atUri: string): string | null {
 }
 
 /**
- * Extract handle and post ID from BlueSky web URL
+ * Extract handle and post ID from Bluesky web URL
  * Format: https://bsky.app/profile/{handle}/post/{postId}
  */
 export function parseBlueskyUrl(
@@ -38,14 +38,14 @@ export function parseBlueskyUrl(
 }
 
 /**
- * Construct BlueSky profile URL from handle
+ * Construct Bluesky profile URL from handle
  */
 export function getProfileUrl(handle: string): string {
   return `https://bsky.app/profile/${handle}`;
 }
 
 /**
- * Construct BlueSky post URL from handle and AT-URI
+ * Construct Bluesky post URL from handle and AT-URI
  */
 export function getPostUrl(handle: string, atUri: string): string | null {
   const postId = extractPostId(atUri);
@@ -54,7 +54,7 @@ export function getPostUrl(handle: string, atUri: string): string | null {
 }
 
 /**
- * Resolve a BlueSky handle to a DID (Decentralized Identifier)
+ * Resolve a Bluesky handle to a DID (Decentralized Identifier)
  */
 export async function resolveHandle(handle: string): Promise<string | null> {
   try {
@@ -74,7 +74,7 @@ export async function resolveHandle(handle: string): Promise<string | null> {
 }
 
 /**
- * Convert BlueSky web URL to AT-URI format
+ * Convert Bluesky web URL to AT-URI format
  */
 export async function webUrlToAtUri(url: string): Promise<string | null> {
   const parsed = parseBlueskyUrl(url);
