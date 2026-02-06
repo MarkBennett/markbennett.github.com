@@ -49,9 +49,9 @@ const { title, description = "MarkBennett.ca - The who, what, where" } =
         <main class="md:col-span-2">
           <slot />
 
-          <div class="mt-8 pt-6 border-t-2 border-border">
+          <div class="mt-8 pt-6 border-t-2 border-border flex items-start gap-4">
             <p class="text-muted text-sm mb-3">Share this page on:</p>
-            <div class="flex gap-4">
+            <div class="flex gap-2">
               <a
                 href={`https://bsky.app/intent/compose?text=${encodeURIComponent(Astro.url.href)}`}
                 target="_blank"
