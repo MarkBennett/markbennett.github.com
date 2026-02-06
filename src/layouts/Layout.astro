@@ -48,6 +48,32 @@ const { title, description = "MarkBennett.ca - The who, what, where" } =
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <main class="md:col-span-2">
           <slot />
+          
+          <div class="mt-8 pt-6 border-t-2 border-border">
+            <p class="text-muted text-sm mb-3">Share this page on:</p>
+            <div class="flex gap-4">
+              <a
+                href={`https://bsky.app/intent/compose?text=${encodeURIComponent(Astro.url.href)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary hover:text-primary-dark transition-colors flex items-center gap-2"
+                aria-label="Share on Bluesky"
+              >
+                <SiBluesky className="w-5 h-5" />
+                <span class="hidden md:inline">Bluesky</span>
+              </a>
+              <a
+                href={`https://toot.kytta.dev/?text=${encodeURIComponent(Astro.url.href)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary hover:text-primary-dark transition-colors flex items-center gap-2"
+                aria-label="Share on Mastodon"
+              >
+                <SiMastodon className="w-5 h-5" />
+                <span class="hidden md:inline">Mastodon</span>
+              </a>
+            </div>
+          </div>
         </main>
 
         <aside class="space-y-8">
