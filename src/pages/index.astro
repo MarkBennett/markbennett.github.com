@@ -2,10 +2,13 @@
 import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
+const NUM_OF_POSTS = 3;
+
 const allBlogPosts = await getCollection("blog");
 const sortedPosts = allBlogPosts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+const recentPosts = sortedPosts.slice(0, NUM_OF_POSTS);
 
 // Get all projects and talks
 const allProjects = await getCollection("project");
@@ -42,7 +45,7 @@ function formatDate(date: Date): string {
   <h4 class="text-xl mb-4 text-heading font-semibold">Recent Blog Posts</h4>
   <ul class="list-none p-0">
     {
-      sortedPosts.map((post) => (
+      recentPosts.map((post) => (
         <li class="mb-6 pb-6 border-b border-border last:border-b-0">
           <a
             href={`/blog/${post.slug}/`}
