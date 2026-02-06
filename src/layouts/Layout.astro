@@ -1,12 +1,12 @@
 ---
 import {
-  SiGithub,
   SiBluesky,
-  SiMastodon,
-  SiSignal,
   SiFacebook,
+  SiGithub,
   SiInstagram,
+  SiMastodon
 } from "react-icons/si";
+import { MastodonShare } from "../components/mastodon/MastodonShare";
 
 interface Props {
   title: string;
@@ -34,7 +34,7 @@ const { title, description = "MarkBennett.ca - The who, what, where" } =
         >
           <img
             src="/images/profile-2026.jpg"
-            alt="An image of me peeking up from the bottom of the frame"
+            alt="A cartoon render of me. I'm a middle age man with light skin and a large handlebar mustache. I'm wearing a grey Icelandic kint sweater with white zigzag rings radiating from my neckline and alternating down my sweater. On my head I have a red toque. The background is a flat blue background."
             class="w-24 h-24 rounded-full object-cover mb-4"
           />
           <div>
@@ -48,6 +48,30 @@ const { title, description = "MarkBennett.ca - The who, what, where" } =
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <main class="md:col-span-2">
           <slot />
+
+          <div class="mt-8 pt-6 border-t-2 border-border flex items-start gap-4">
+            <p class="text-muted text-sm mb-3">Share this page on:</p>
+            <div class="flex gap-2">
+              <a
+                href={`https://bsky.app/intent/compose?text=${encodeURIComponent(Astro.url.href)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary hover:text-primary-dark transition-colors flex items-center gap-2"
+                aria-label="Share on Bluesky"
+              >
+                <SiBluesky className="w-5 h-5" />
+                <span class="hidden md:inline">Bluesky</span>
+              </a>
+              <MastodonShare url={Astro.url.href} client:idle>
+                <div
+                  class="text-primary hover:text-primary-dark transition-colors flex items-center gap-2"
+                >
+                  <SiMastodon className="w-5 h-5" />
+                  <span class="hidden md:inline">Mastodon</span>
+                </div>
+              </MastodonShare>
+            </div>
+          </div>
         </main>
 
         <aside class="space-y-8">

@@ -144,7 +144,7 @@ export default function BlueskyComment({
           </div>
         )}
 
-        {/* Link to view on BlueSky */}
+        {/* Link to view on Bluesky */}
         {postUrl && (
           <a
             href={postUrl}
@@ -152,7 +152,7 @@ export default function BlueskyComment({
             rel="noopener noreferrer"
             className="text-xs text-muted hover:text-primary ml-auto"
           >
-            View on BlueSky →
+            View on Bluesky →
           </a>
         )}
       </div>
